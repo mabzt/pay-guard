@@ -27,6 +27,7 @@ replay_pid*
 target/
 .idea
 api-gateway/target/
+user-service/target/
 fraud-engine/target/
 notification-service/target/
 payment-service/target/
