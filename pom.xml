@@ -21,8 +21,9 @@
     <modules>
         <module>api-gateway</module>
         <module>fraud-engine</module>
-        <module>notification-service</module>
+        <module>user-service</module>
         <module>payment-service</module>
+        <module>notification-service</module>
         <module>reconciliation-service</module>
     </modules>
 
