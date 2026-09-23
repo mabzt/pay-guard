@@ -1,9 +1,12 @@
 package com.maison.mabs.userservice;
 
+import com.maison.mabs.userservice.infrastructure.config.keycloak.KeycloakProperties;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 
 @SpringBootApplication
+@EnableConfigurationProperties(KeycloakProperties.class)
 public class UserServiceApplication {
 
 	public static void main(String[] args) {
