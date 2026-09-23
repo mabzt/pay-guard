@@ -12,8 +12,11 @@
     </module>
 
     <module name="SuppressionFilter">
-        <property name="file" value="${org.checkstyle.sun.suppressionfilter.config}" default="build/checkstyle/suppressions.xml"/>
+        <property name="file" value="${checkstyle.suppressions.file}" default="build/checkstyle/suppressions.xml"/>
+        <property name="optional" value="true"/>
     </module>
+
+    <module name="SuppressWarningsFilter"/>
 
     <!-- TreeWalker Checks -->
     <module name="TreeWalker">
