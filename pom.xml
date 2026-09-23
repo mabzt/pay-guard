@@ -15,6 +15,7 @@
 
     <properties>
         <java.version>25</java.version>
+        <checkyle-maven-pluging.version>3.6.0</checkyle-maven-pluging.version>
         <spring-javaformat-maven-plugin.version>0.0.48</spring-javaformat-maven-plugin.version>
     </properties>
 
@@ -26,6 +27,54 @@
         <module>notification-service</module>
         <module>reconciliation-service</module>
     </modules>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-kafka</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-kafka-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-webmvc-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-webmvc</artifactId>
+        </dependency>
+
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+    </dependencies>
 
     <build>
         <plugins>
@@ -63,13 +112,13 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-checkstyle-plugin</artifactId>
-                <version>3.3.1</version>
+                <version>${checkyle-maven-pluging.version}</version>
 
                 <dependencies>
                     <dependency>
                         <groupId>com.puppycrawl.tools</groupId>
                         <artifactId>checkstyle</artifactId>
-                        <version>10.9.1</version>
+                        <version>14.1.0</version>
                     </dependency>
 
                     <dependency>
@@ -95,17 +144,26 @@
                         <phase>validate</phase>
                         <inherited>true</inherited>
                         <configuration>
-                            <configLocation>
-                                ${project.basedir}/build/checkstyle/checkstyle.xml
-                            </configLocation>
+                            <configLocation>${maven.multiModuleProjectDirectory}/build/checkstyle/checkstyle.xml</configLocation>
                             <includeTestSourceDirectory>true</includeTestSourceDirectory>
-                            <suppressionsLocation>
-                                ${project.basedir}/build/checkstyle/suppressions.xml
-                            </suppressionsLocation>
+                            <suppressionsLocation>${maven.multiModuleProjectDirectory}/build/checkstyle/suppressions.xml</suppressionsLocation>
                         </configuration>
                     </execution>
                 </executions>
             </plugin>
         </plugins>
     </build>
+
+    <reporting>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+                <version>${checkyle-maven-pluging.version}</version>
+                <configuration>
+                <configLocation>${maven.multiModuleProjectDirectory}/build/checkstyle/checkstyle.xml</configLocation>
+                </configuration>
+            </plugin>
+        </plugins>
+    </reporting>
 </project>
