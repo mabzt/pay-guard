@@ -1,3 +1,16 @@
 spring:
   application:
     name: user-service
+
+
+keycloak:
+  server-url: http://localhost:8080
+  realm: payguard
+  client-id:  ${CLIENT-ID}
+  client-secret: ${CLIENT-SECRET}
+  admin:
+    username: ${ADMIN-USERNAME}
+    password: ${ADMIN-PASSWORD}
+
+server:
+  port: 9091
