@@ -28,12 +28,13 @@ services:
     volumes:
       - keycloak_postgres_data:/var/lib/postgresql/data_4
     networks:
-      - keycloak_net          # ← moved from backend to keycloak_net
+      - keycloak_net
     healthcheck:
       test: [ "CMD-SHELL", "pg_isready -U keycloak -d keycloak" ]
       interval: 10s
       timeout: 5s
       retries: 5
+
   redis:
     container_name: redis-stack
     image: redis/redis-stack:latest
