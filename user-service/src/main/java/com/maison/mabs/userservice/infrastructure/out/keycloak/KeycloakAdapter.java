@@ -7,6 +7,8 @@ import com.maison.mabs.userservice.infrastructure.config.keycloak.KeycloakProper
 import com.maison.mabs.userservice.infrastructure.out.keycloak.dto.AuthTokenResponse;
 import com.maison.mabs.userservice.infrastructure.out.keycloak.exception.KeycloakException;
 import com.maison.mabs.userservice.infrastructure.out.keycloak.exception.UserAlreadyExistsException;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import io.github.resilience4j.retry.annotation.Retry;
 import jakarta.ws.rs.core.Response;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -41,6 +43,8 @@ public class KeycloakAdapter implements KeycloakPort {
 	private final RealmResource realmResource;
 
 	@Override
+	@Retry(name = "keycloak")
+	@CircuitBreaker(name = "keycloak")
 	public void createUser(User user) {
 		var keycloakUser = buildUserRepresentation(user);
 		var keycloakUserId = createKeyCloakUserId(keycloakUser, user.email());
@@ -48,12 +52,16 @@ public class KeycloakAdapter implements KeycloakPort {
 	}
 
 	@Override
+	@Retry(name = "keycloak")
+	@CircuitBreaker(name = "keycloak")
 	public void revokeAllSessions(UUID id) {
 		this.realmResource.users().get(findKeycloakUserId(id)).logout();
 		log.info("Revoked all sessions for userId={}", id);
 	}
 
 	@Override
+	@Retry(name = "keycloak")
+	@CircuitBreaker(name = "keycloak")
 	public void deleteUser(UUID id) {
 		String keycloakUserId = findKeycloakUserId(id);
 		this.realmResource.users().get(keycloakUserId).remove();
@@ -61,6 +69,8 @@ public class KeycloakAdapter implements KeycloakPort {
 	}
 
 	@Override
+	@Retry(name = "keycloak")
+	@CircuitBreaker(name = "keycloak")
 	public AuthTokenResponse obtainToken(String email, String password) {
 		try {
 			Keycloak keycloak = KeycloakBuilder.builder()
